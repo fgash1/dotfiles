@@ -37,7 +37,7 @@ bindsym $mod+Shift+p exec --no-startup-id shutter --active
 bindsym $mod+Ctrl+p exec --no-startup-id ~/.config/i3/scripts/monitor-sc-select
 bindsym Ctrl+Shift+l exec $lock
 bindsym $mod+Return exec --no-startup-id $terminal
-bindsym Mod1+space exec --no-startup-id $menu
+bindsym $mod+space exec --no-startup-id $menu
 bindsym $mod+v exec --no-startup-id \
 rofi -modi "clipboard:greenclip print" -show clipboard
 
@@ -74,7 +74,7 @@ bindsym $mod+e layout toggle split
 bindsym $mod+Shift+space floating toggle
 
 # change focus between tiling / floating windows
-bindsym $mod+space focus mode_toggle
+bindsym Mod1+space focus mode_toggle
 
 # focus the parent container
 bindsym $mod+a focus parent
