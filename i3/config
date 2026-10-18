@@ -6,7 +6,6 @@ set $lock i3lock -n -e -c 000000
 
 font pango:Source Code Pro 10
 
-exec --no-startup-id dex --autostart --envirnment i3
 exec --no-startup-id xss-lock --transfer-sleep-lock -- $lock
 exec --no-startup-id nm-applet
 exec --no-startup-id greenclip daemon
