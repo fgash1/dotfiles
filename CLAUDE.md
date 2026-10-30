@@ -24,7 +24,7 @@ The `.claude/` tree keeps Claude's native structure. The `.codex/` tree keeps Co
 ~/dotfiles/install.sh
 ```
 
-The script is idempotent — safe to re-run on an already-installed system. It uses a `lns` helper that removes an existing symlink at the destination before re-linking (`[ -L "$dst" ] && rm "$dst"`). Real directories or files are never removed, so if a destination exists and is not a symlink, `ln -s` will fail visibly rather than silently nest or overwrite.
+The script is idempotent — safe to re-run on an already-installed system. It uses a `lns src dst [sudo]` helper that creates missing parent dirs and replaces an existing symlink via `ln -sfn`. If the destination exists and is not a symlink, it prints `skip: ...` to stderr and leaves it untouched. Pass `sudo` as the third arg for root-owned targets under `/etc`.
 
 Editing any file in this repo updates the live config immediately via the symlink — no reload step beyond whatever the target tool needs (e.g. `i3-msg restart`, `:source` in nvim, `exec fish`).
 

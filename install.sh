@@ -1,9 +1,13 @@
 #!/bin/bash
 
 lns() {
-  local src=$1 dst=$2
-  [ -L "$dst" ] && rm "$dst"
-  ln -s "$src" "$dst"
+  local src=$1 dst=$2 sudo=$3
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+    echo "skip: $dst exists and is not a symlink" >&2
+    return
+  fi
+  $sudo mkdir -p "$(dirname "$dst")"
+  $sudo ln -sfn "$src" "$dst"
 }
 
 lns ~/dotfiles/i3        ~/.config/i3
@@ -23,11 +27,8 @@ lns ~/dotfiles/.tmux.conf      ~/.tmux.conf
 lns ~/dotfiles/.xinitrc        ~/.xinitrc
 lns ~/dotfiles/.prettierrc     ~/.prettierrc
 
-[ -L /etc/xdg/reflector/reflector.conf ] && sudo rm /etc/xdg/reflector/reflector.conf
-sudo ln -s ~/dotfiles/reflector.conf /etc/xdg/reflector/reflector.conf
-
-[ -L /etc/X11/xorg.conf.d/00-keyboard.conf ] && sudo rm /etc/X11/xorg.conf.d/00-keyboard.conf
-sudo ln -s ~/dotfiles/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf
+lns ~/dotfiles/reflector.conf  /etc/xdg/reflector/reflector.conf      sudo
+lns ~/dotfiles/00-keyboard.conf /etc/X11/xorg.conf.d/00-keyboard.conf sudo
 
 # Claude Code: ~/.claude/ (docs: code.claude.com)
 #   agents/         subagents
