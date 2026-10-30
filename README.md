@@ -26,7 +26,7 @@ These are some of the tools that I use and have customized for my development wo
 ## Usage:
 
 ```
-$ git clone https://github.com/Fatjon-Gash1/dotfiles.git ~/dotfiles
+$ git clone https://github.com/fgash1/dotfiles ~/dotfiles
 $ ~/dotfiles/install.sh
 ```
 
