@@ -1,11 +1,22 @@
 #!/bin/bash
-ln -s ~/dotfiles/aerospace/ ~/.config
-ln -s ~/dotfiles/alacritty/ ~/.config
-ln -s ~/dotfiles/fish/ ~/.config
-ln -s ~/dotfiles/kanata/ ~/.config
-ln -s ~/dotfiles/nvim/ ~/.config
 
-ln -s ~/dotfiles/starship.toml ~/.config
-ln -s ~/dotfiles/.tmux.conf ~/
-ln -s ~/dotfiles/.prettierrc ~/
-ln -s ~/dotfiles/.aerospace.toml ~/
+cd "$(dirname "$0")" || exit 1
+
+lns() {
+  local src=$1 dst=$2 sudo=$3
+  if [ -e "$dst" ] && [ ! -L "$dst" ]; then
+    echo "skip: $dst exists and is not a symlink" >&2
+    return
+  fi
+  $sudo mkdir -p "$(dirname "$dst")"
+  $sudo ln -sfn "$src" "$dst"
+}
+
+while read -r src dst sudo; do
+  [[ -z $src || $src == \#* ]] && continue
+  if [ ! -e "$src" ]; then
+    echo "missing: $src" >&2
+    continue
+  fi
+  lns "$PWD/$src" "${dst/#\~/$HOME}" $sudo
+done < links

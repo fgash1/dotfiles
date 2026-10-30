@@ -1,0 +1,12 @@
+# src (relative to repo)   dst                         [sudo]
+
+aerospace                  ~/.config/aerospace
+alacritty                  ~/.config/alacritty
+fish                       ~/.config/fish
+kanata                     ~/.config/kanata
+nvim                       ~/.config/nvim
+
+starship.toml              ~/.config/starship.toml
+.tmux.conf                 ~/.tmux.conf
+.prettierrc                ~/.prettierrc
+.aerospace.toml            ~/.aerospace.toml

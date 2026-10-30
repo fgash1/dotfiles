@@ -19,5 +19,5 @@ $ git clone https://github.com/Fatjon-Gash1/dotfiles.git ~/dotfiles
 $ ~/dotfiles/install.sh
 ```
 
-> [!WARNING]
-> Before executing the script make sure that you have removed the specific folders from the `~/.config` directory.
+> [!NOTE]
+> The install script is idempotent — safe to re-run. It links everything listed in `links`, replaces existing symlinks, and skips (with a warning) any destination that is a real file or directory.
