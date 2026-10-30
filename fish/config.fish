@@ -7,9 +7,8 @@ alias md mkdir
 alias rd rmdir
 alias t touch
 alias fv 'nvim $(fzf)'
-alias ll 'exa --header --long --extended --group-directories-first --no-user --no-permissions --icons=auto'
+alias ll 'eza --header --long --extended --group-directories-first --no-user --no-permissions --icons=auto'
 alias v nvim
-alias s startx
 alias gs 'git status'
 alias ga 'git add'
 alias gc 'git commit -m'
@@ -21,3 +20,7 @@ alias gr 'git rm'
 starship init fish | source
 
 fish_add_path ~/.local/bin ~/.cargo/bin
+
+if test (uname) = Linux
+    alias s startx
+end

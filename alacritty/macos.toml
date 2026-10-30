@@ -1,0 +1,8 @@
+[font]
+size = 14
+
+[window]
+option_as_alt = "Both"
+
+[window.padding]
+y = 5

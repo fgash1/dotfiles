@@ -12,6 +12,9 @@ lns() {
   $sudo ln -sfn "$src" "$dst"
 }
 
+links=links.$(uname)
+[ -f "$links" ] || { echo "no $links for this OS" >&2; exit 1; }
+
 while read -r src dst sudo; do
   [[ -z $src || $src == \#* ]] && continue
   if [ ! -e "$src" ]; then
@@ -19,4 +22,4 @@ while read -r src dst sudo; do
     continue
   fi
   lns "$PWD/$src" "${dst/#\~/$HOME}" $sudo
-done < links
+done < "$links"

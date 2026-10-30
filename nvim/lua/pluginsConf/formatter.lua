@@ -15,3 +15,12 @@ require("conform").setup({
 		handlebars = { "djlint" },
 	},
 })
+
+if vim.fn.has("mac") == 1 then
+	require("conform").formatters_by_ft.php = { "php-cs-fixer" }
+	require("conform").formatters["php-cs-fixer"] = {
+		command = "php-cs-fixer",
+		args = { "fix", "--config=" .. vim.fn.expand("~/.php-cs-fixer.php"), "$FILENAME" },
+		stdin = false,
+	}
+end

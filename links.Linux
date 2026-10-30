@@ -5,6 +5,7 @@ polybar                    ~/.config/polybar
 picom                      ~/.config/picom
 ranger                     ~/.config/ranger
 alacritty                  ~/.config/alacritty
+alacritty/linux.toml       ~/.config/alacritty-os.toml
 fish                       ~/.config/fish
 nvim                       ~/.config/nvim
 rofi                       ~/.config/rofi

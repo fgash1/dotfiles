@@ -14,18 +14,19 @@ require("mason-lspconfig").setup({
     automatic_enable = { "intelephense" }
 })
 
-require("mason-tool-installer").setup({
-	ensure_installed = {
-		"vale",
-		"eslint_d",
-		"stylelint",
-		"pylint",
-		"checkstyle",
-		"stylua",
-		"prettier",
-		"jsonlint",
-	},
-})
+local tools = {
+	"vale",
+	"eslint_d",
+	"stylelint",
+	"checkstyle",
+	"stylua",
+	"prettier",
+	"jsonlint",
+}
+if vim.fn.has("mac") == 0 then
+	table.insert(tools, "pylint")
+end
+require("mason-tool-installer").setup({ ensure_installed = tools })
 
 local null_ls = require("null-ls")
 

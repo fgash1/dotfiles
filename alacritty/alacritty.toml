@@ -1,5 +1,6 @@
-[font]
-size = 10
+[general]
+import = ["~/.config/alacritty-os.toml"]
+
 [font.normal]
 family = "SauceCodePro Nerd Font"
 

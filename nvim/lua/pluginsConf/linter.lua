@@ -7,6 +7,7 @@ vim.g.ale_linters = {
 	svelte = { "cspell" },
 	css = { "cspell" },
 	python = { "cspell" },
+	php = { "cspell" },
 	java = { "cspell" },
 	handlebars = { "cspell" },
 }
@@ -21,11 +22,14 @@ lint.linters_by_ft = {
 	typescriptreact = { "eslint_d" },
 	svelte = { "eslint_d" },
 	css = { "stylelint" },
-	python = { "pylint" },
 	java = { "checkstyle" },
+	twig = { "djlint" },
 	handlebars = { "djlint" },
 	json = { "jsonlint" },
 }
+if vim.fn.has("mac") == 0 then
+	lint.linters_by_ft.python = { "pylint" }
+end
 
 local lint_augroup = vim.api.nvim_create_augroup("lint", { clear = true })
 
