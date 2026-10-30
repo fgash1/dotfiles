@@ -24,7 +24,7 @@ The `.claude/` tree keeps Claude's native structure. The `.codex/` tree keeps Co
 ~/dotfiles/install.sh
 ```
 
-The script is idempotent — safe to re-run on an already-installed system. It uses a `lns src dst [sudo]` helper that creates missing parent dirs and replaces an existing symlink via `ln -sfn`. If the destination exists and is not a symlink, it prints `skip: ...` to stderr and leaves it untouched. Pass `sudo` as the third arg for root-owned targets under `/etc`.
+The script is idempotent — safe to re-run on an already-installed system. `install.sh` is generic and kept identical across branches (`arch`, `macos`); what gets linked is declared in the branch-specific `links` file, one `src dst [sudo]` per line (`src` relative to the repo root, `~` allowed in `dst`, `#` comments). To link a new config, add a line to `links` — don't edit `install.sh`. For each entry it creates missing parent dirs and replaces an existing symlink via `ln -sfn`; if the destination exists and is not a symlink it prints `skip: ...` and leaves it untouched, and a missing `src` prints `missing: ...`. A third column `sudo` is for root-owned targets under `/etc`.
 
 Editing any file in this repo updates the live config immediately via the symlink — no reload step beyond whatever the target tool needs (e.g. `i3-msg restart`, `:source` in nvim, `exec fish`).
 

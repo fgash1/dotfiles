@@ -28,4 +28,4 @@ $ ~/dotfiles/install.sh
 ```
 
 > [!NOTE]
-> The install script is idempotent — safe to re-run. It replaces existing symlinks but will not overwrite real directories or files.
+> The install script is idempotent — safe to re-run. It links everything listed in `links`, replaces existing symlinks, and skips (with a warning) any destination that is a real file or directory.

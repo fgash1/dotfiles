@@ -1,0 +1,37 @@
+# src (relative to repo)   dst                                     [sudo]
+
+i3                         ~/.config/i3
+polybar                    ~/.config/polybar
+picom                      ~/.config/picom
+ranger                     ~/.config/ranger
+alacritty                  ~/.config/alacritty
+fish                       ~/.config/fish
+nvim                       ~/.config/nvim
+rofi                       ~/.config/rofi
+feh                        ~/.config/feh
+kanata                     ~/.config/kanata
+
+code-flags.conf            ~/.config/code-flags.conf
+starship.toml              ~/.config/starship.toml
+.tmux.conf                 ~/.tmux.conf
+.xinitrc                   ~/.xinitrc
+.prettierrc                ~/.prettierrc
+
+reflector.conf             /etc/xdg/reflector/reflector.conf       sudo
+00-keyboard.conf           /etc/X11/xorg.conf.d/00-keyboard.conf   sudo
+
+.claude/agents             ~/.claude/agents
+.claude/skills             ~/.claude/skills
+.claude/rules              ~/.claude/rules
+.claude/output-styles      ~/.claude/output-styles
+.claude/hooks              ~/.claude/hooks
+.claude/settings.json      ~/.claude/settings.json
+
+.codex/agents              ~/.codex/agents
+.codex/hooks               ~/.codex/hooks
+.codex/rules               ~/.codex/rules
+.codex/AGENTS.md           ~/.codex/AGENTS.md
+.codex/hooks.json          ~/.codex/hooks.json
+
+# Cross-tool skills (Agent Skills standard) consumed by Codex from ~/.agents/skills/
+.agents/skills             ~/.agents/skills
