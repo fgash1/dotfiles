@@ -7,7 +7,7 @@ One branch for both Arch Linux and macOS; OS-specific bits are handled per OS (s
 -   picom - Xorg display compositor (Linux).
 -   Polybar - Highly customizable status bar (Linux).
 -   alacritty - Fast GPU-accelerated terminal.
--   fish (shell) + fisher + starship (customizable prompt).
+-   fish (shell) + starship (customizable prompt).
 -   Neovim - Vim fork (fully configured with LSPs, linters,
     parsers, auto-complete, and a bunch of plugins).
 -   rofi - Application launcher and dmenu replacement (Linux).

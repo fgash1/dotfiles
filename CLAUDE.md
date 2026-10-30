@@ -34,7 +34,7 @@ Entrypoint `nvim/init.lua` loads `lua/sets.lua`, `lua/keymaps.lua`, and `lua/plu
 
 ## Fish shell config
 
-`fish/config.fish` is the entrypoint. `fish/conf.d/` is autoloaded (note: `conf.d` is gitignored except `nvm.fish` and `z.fish`, which are force-tracked). `fish/functions/` holds individual function files (one function per file, fish convention). Plugin files (fisher, z, bass) are committed directly; `fish/fish_plugins` lists them, but fisher's own state is not set up, so `fisher update` would report conflicts. Prompt is starship (`starship.toml` at repo root).
+`fish/config.fish` is the entrypoint. `fish/conf.d/` is autoloaded (note: `conf.d` is gitignored except `nvm.fish` and `z.fish`, which are force-tracked). `fish/functions/` holds individual function files (one function per file, fish convention). Plugins (z, bass) are vendored: their files are committed directly and there is no plugin manager, so update them by copying in new upstream files. Prompt is starship (`starship.toml` at repo root).
 
 ## Per-OS differences
 
