@@ -12,7 +12,7 @@ Shared config dirs symlinked to `~/.config/<name>`: `alacritty`, `fish`, `nvim`,
 
 Agent tooling configs are organized to be shared across CLIs:
 
-- `.claude/` → symlinked piecewise into `~/.claude/` (subdirs: `agents/`, `skills/`, `rules/`, `output-styles/`, `hooks/`). MCP servers and main settings live in `~/.claude.json` and are NOT in this repo. `settings.local.json` is the only checked-in settings file. `plugins/` is app-managed and not tracked.
+- `.claude/` → symlinked piecewise into `~/.claude/` (subdirs: `agents/`, `skills/`, `rules/`, `output-styles/`, `hooks/`). MCP servers live in `~/.claude.json` and are NOT in this repo. `settings.json` is tracked but marked assume-unchanged locally (Claude Code rewrites it); `settings.local.json` is gitignored. `plugins/` is app-managed and not tracked.
 - `.codex/` → symlinked piecewise into `~/.codex/` (subdirs: `agents/`, `hooks/`, `rules/`, plus `AGENTS.md` and `hooks.json`). Main config (`config.toml` and MCP) lives outside this repo.
 - `.agents/skills/` → symlinked to `~/.agents/skills/`, the cross-tool Agent Skills location consumed by Codex.
 
@@ -34,7 +34,7 @@ Entrypoint `nvim/init.lua` loads `lua/sets.lua`, `lua/keymaps.lua`, and `lua/plu
 
 ## Fish shell config
 
-`fish/config.fish` is the entrypoint. `fish/conf.d/` is autoloaded (note: `conf.d` is gitignored, so machine-local snippets like `nvm.fish`, `z.fish` are not tracked). `fish/functions/` holds individual function files (one function per file, fish convention). Plugin list is `fish/fish_plugins` (managed by fisher). Prompt is starship (`starship.toml` at repo root).
+`fish/config.fish` is the entrypoint. `fish/conf.d/` is autoloaded (note: `conf.d` is gitignored except `nvm.fish` and `z.fish`, which are force-tracked). `fish/functions/` holds individual function files (one function per file, fish convention). Plugin files (fisher, z, bass) are committed directly; `fish/fish_plugins` lists them, but fisher's own state is not set up, so `fisher update` would report conflicts. Prompt is starship (`starship.toml` at repo root).
 
 ## Per-OS differences
 
@@ -47,6 +47,6 @@ There are no per-OS branches. Shared configs carry small OS checks instead; pref
 
 ## Conventions worth knowing
 
-- `.gitignore` excludes `nvim/plugin/packer_compiled.lua`, `fish/fish_variables`, `fish/conf.d`, and `*.bak`. Don't try to commit generated/local state in those paths.
+- `.gitignore` excludes `nvim/plugin/packer_compiled.lua`, `fish/fish_variables`, `fish/conf.d`, `.DS_Store`, `*.bak`, `.claude/settings.local.json` and `.claude/skills/synced/`. Don't try to commit generated/local state in those paths.
 - `arch_packages_list.txt` is a manual snapshot of installed packages, not auto-generated.
 - `checkstyle.xml` and `.prettierrc` are personal style configs used by editors/projects, unrelated to this repo's own tooling.
