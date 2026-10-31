@@ -48,5 +48,6 @@ There are no per-OS branches. Shared configs carry small OS checks instead; pref
 ## Conventions worth knowing
 
 - `.gitignore` excludes `nvim/plugin/packer_compiled.lua`, `fish/fish_variables`, `fish/conf.d`, `.DS_Store`, `*.bak`, `.claude/settings.local.json` and `.claude/skills/synced/`. Don't try to commit generated/local state in those paths.
-- `arch_packages_list.txt` is a manual snapshot of installed packages, not auto-generated.
+- `pkglist.txt` (repo) and `aur.txt` (AUR) are manual snapshots of explicitly installed packages, not auto-generated; see `docs/arch-packages.md`.
+- `docs/` holds personal how-to guides (Arch packages, cleanup).
 - `checkstyle.xml` and `.prettierrc` are personal style configs used by editors/projects, unrelated to this repo's own tooling.
