@@ -5,6 +5,7 @@
 
 (defcfg
   process-unmapped-keys yes
+  log-layer-changes no
   linux-dev-names-include (
     "Pebble K380s"
   )
