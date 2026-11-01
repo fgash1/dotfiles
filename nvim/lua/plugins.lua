@@ -21,7 +21,7 @@ return require("packer").startup(function(use)
 	use("tpope/vim-fugitive")
     use("lewis6991/gitsigns.nvim")
 	use("lukas-reineke/indent-blankline.nvim")
-	use("norcalli/nvim-colorizer.lua")
+	use("NvChad/nvim-colorizer.lua")
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
