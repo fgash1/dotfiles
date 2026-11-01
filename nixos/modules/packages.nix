@@ -56,6 +56,7 @@
     phpPackages.composer
     pipx
     python3
+    gcc
     rustc
     tree-sitter
     uv
