@@ -5,3 +5,4 @@ fish/conf.d
 *.bak
 .claude/settings.local.json
 .claude/skills/synced/
+result
