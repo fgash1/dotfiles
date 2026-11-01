@@ -21,6 +21,7 @@
     killall
     lshw
     lsof
+    lm_sensors
     pciutils
     rar
     ranger
