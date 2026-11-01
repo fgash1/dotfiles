@@ -8,6 +8,7 @@
   log-layer-changes no
   linux-dev-names-include (
     "Pebble K380s"
+    "AT Translated Set 2 keyboard"
   )
   macos-dev-names-include (
     "Pebble K380s"
