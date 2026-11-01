@@ -41,6 +41,10 @@
   programs.nix-ld.enable = true;
 
   programs.fish.enable = true;
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+  };
   users.users.fatjon = {
     isNormalUser = true;
     shell = pkgs.fish;

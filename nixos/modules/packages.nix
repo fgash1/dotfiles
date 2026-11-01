@@ -21,7 +21,6 @@
     killall
     lshw
     lsof
-    neovim
     pciutils
     rar
     ranger
