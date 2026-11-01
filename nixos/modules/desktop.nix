@@ -22,6 +22,11 @@
     jack.enable = true;
   };
 
+  qt = {
+    enable = true;
+    platformTheme = "qt5ct";
+  };
+
   programs.dconf.enable = true;
   programs.firefox.enable = true;
   services.gvfs.enable = true;

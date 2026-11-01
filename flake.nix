@@ -9,20 +9,28 @@
 
   outputs =
     { nixpkgs, home-manager, ... }:
+    let
+      mkHost =
+        name:
+        nixpkgs.lib.nixosSystem {
+          modules = [
+            ./nixos/hosts/${name}
+            home-manager.nixosModules.home-manager
+            {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "hm-bak";
+                users.fatjon = import ./nixos/home;
+              };
+            }
+          ];
+        };
+    in
     {
-      nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-        modules = [
-          ./nixos/hosts/laptop
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              backupFileExtension = "hm-bak";
-              users.fatjon = import ./nixos/home;
-            };
-          }
-        ];
-      };
+      nixosConfigurations = nixpkgs.lib.genAttrs [
+        "laptop"
+        "desktop"
+      ] mkHost;
     };
 }
