@@ -43,6 +43,8 @@
     MOZ_DISABLE_RDD_SANDBOX = "1";
   };
   programs.firefox.preferences = {
+    "browser.download.dir" = "/data/Downloads";
+    "browser.download.folderList" = 2;
     "media.ffmpeg.vaapi.enabled" = true;
     "media.av1.enabled" = false;
     "gfx.x11-egl.force-enabled" = true;

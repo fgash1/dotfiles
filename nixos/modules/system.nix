@@ -37,6 +37,9 @@
     agentTimeout = "8h";
   };
 
+  # Lets prebuilt Linux binaries (e.g. the native claude installer) find a dynamic loader
+  programs.nix-ld.enable = true;
+
   programs.fish.enable = true;
   users.users.fatjon = {
     isNormalUser = true;

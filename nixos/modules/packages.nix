@@ -49,6 +49,7 @@
     docker-compose
     go
     gotools
+    mermaid-cli
     meson
     nodejs
     patchelf
