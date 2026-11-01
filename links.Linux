@@ -17,6 +17,8 @@ starship.toml              ~/.config/starship.toml
 .tmux.conf                 ~/.tmux.conf
 .xinitrc                   ~/.xinitrc
 .prettierrc                ~/.prettierrc
+git/config                 ~/.config/git/config
+git/ignore                 ~/.config/git/ignore
 
 reflector.conf             /etc/xdg/reflector/reflector.conf       sudo
 00-keyboard.conf           /etc/X11/xorg.conf.d/00-keyboard.conf   sudo

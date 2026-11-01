@@ -8,7 +8,7 @@ Personal dotfiles for Arch Linux (i3) and macOS (AeroSpace), on a single `main` 
 
 ## Layout / what each top-level dir is
 
-Shared config dirs symlinked to `~/.config/<name>`: `alacritty`, `fish`, `nvim`, `kanata`. Linux-only: `i3`, `polybar`, `picom`, `ranger`, `rofi`, `feh`, plus `code-flags.conf`, `.xinitrc`, `reflector.conf` and `00-keyboard.conf` (root-owned, into `/etc`). macOS-only: `aerospace`, `.aerospace.toml`. Shared loose files: `starship.toml`, `.tmux.conf`, `.prettierrc`.
+Shared config dirs symlinked to `~/.config/<name>`: `alacritty`, `fish`, `nvim`, `kanata`. Linux-only: `i3`, `polybar`, `picom`, `ranger`, `rofi`, `feh`, plus `code-flags.conf`, `.xinitrc`, `reflector.conf` and `00-keyboard.conf` (root-owned, into `/etc`). macOS-only: `aerospace`, `.aerospace.toml`. Shared loose files: `starship.toml`, `.tmux.conf`, `.prettierrc`. `git/config` and `git/ignore` link into `~/.config/git/`; machine-specific git settings (credential helper, `safe.directory`) go in the untracked `~/.config/git/local`, which `git/config` includes.
 
 Agent tooling configs are organized to be shared across CLIs:
 

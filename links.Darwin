@@ -10,4 +10,6 @@ nvim                       ~/.config/nvim
 starship.toml              ~/.config/starship.toml
 .tmux.conf                 ~/.tmux.conf
 .prettierrc                ~/.prettierrc
+git/config                 ~/.config/git/config
+git/ignore                 ~/.config/git/ignore
 .aerospace.toml            ~/.aerospace.toml
