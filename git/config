@@ -1,11 +1,11 @@
 [user]
 	name = fgash1
 	email = fatjon.gashi.891@gmail.com
-	signingkey = /home/fatjon/.ssh/git_signing.pub
+	signingkey = ~/.ssh/git_signing.pub
 [gpg]
 	format = ssh
 [gpg "ssh"]
-	allowedSignersFile = ~/.ssh/allowed_signers
+	allowedSignersFile = ~/.config/git/allowed_signers
 [commit]
 	gpgsign = true
 [pull]
