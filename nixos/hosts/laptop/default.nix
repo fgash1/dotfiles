@@ -14,6 +14,7 @@
   environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
 
   environment.systemPackages = [ pkgs.brightnessctl ];
+  services.udev.packages = [ pkgs.brightnessctl ];
 
   services.thermald.enable = true;
 
