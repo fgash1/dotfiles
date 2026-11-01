@@ -20,6 +20,7 @@ starship.toml              ~/.config/starship.toml
 git/config                 ~/.config/git/config
 git/ignore                 ~/.config/git/ignore
 git/allowed_signers        ~/.config/git/allowed_signers
+ssh/config                 ~/.ssh/config
 
 reflector.conf             /etc/xdg/reflector/reflector.conf       sudo
 00-keyboard.conf           /etc/X11/xorg.conf.d/00-keyboard.conf   sudo
