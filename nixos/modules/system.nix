@@ -32,6 +32,11 @@
 
   virtualisation.docker.enable = true;
 
+  programs.ssh = {
+    startAgent = true;
+    agentTimeout = "8h";
+  };
+
   programs.fish.enable = true;
   users.users.fatjon = {
     isNormalUser = true;

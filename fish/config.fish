@@ -23,4 +23,6 @@ fish_add_path ~/.local/bin ~/.cargo/bin
 
 if test (uname) = Linux
     alias s startx
+    # NixOS exports this itself; Arch's systemd ssh-agent unit does not
+    set -q SSH_AUTH_SOCK; or set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent.socket
 end
