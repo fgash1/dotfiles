@@ -11,6 +11,7 @@
     fastfetch
     fd
     fzf
+    ffmpeg
     gh
     git
     git-filter-repo
@@ -26,6 +27,7 @@
     ranger
     rmlint
     rsync
+    ripgrep
     sd
     speedtest-cli
     starship
@@ -94,7 +96,10 @@
     xset
     xsetroot
     xss-lock
+    xhost
+    xwininfo
 
+    audacity
     chromium
     dbeaver-bin
     filezilla
