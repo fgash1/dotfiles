@@ -31,7 +31,9 @@ stdenv.mkDerivation {
 
   installPhase = ''
     runHook preInstall
-    install -Dm444 8821ce.ko -t $out/lib/modules/${kernel.modDirVersion}/kernel/drivers/net/wireless
+    make $makeFlags -C ${modDir}/build M=$PWD \
+      INSTALL_MOD_PATH=$out INSTALL_MOD_DIR=kernel/drivers/net/wireless \
+      INSTALL_MOD_STRIP=1 DEPMOD=true modules_install
     runHook postInstall
   '';
 
