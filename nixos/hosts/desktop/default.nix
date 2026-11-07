@@ -52,6 +52,8 @@
   };
 
   # In-kernel rtw88 keeps dropping this card, even with deep LPS and ASPM disabled
+  # With power saving on, the card stops answering ARP and drops off the LAN
+  networking.networkmanager.wifi.powersave = false;
   boot.extraModulePackages = [ (config.boot.kernelPackages.callPackage ./rtl8821ce.nix { }) ];
   boot.blacklistedKernelModules = [
     "rtw88_8821ce"
