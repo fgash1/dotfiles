@@ -53,6 +53,9 @@
   users.users.fatjon = {
     isNormalUser = true;
     shell = pkgs.fish;
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAwetI0mnb/fs/tX4a0N0v3RI4julS75nm+TGPyImyEX fatjon@laptop"
+    ];
     extraGroups = [
       "wheel"
       "networkmanager"
