@@ -18,11 +18,6 @@
 
   services.thermald.enable = true;
 
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-  };
-
   security.sudo.wheelNeedsPassword = false;
 
   system.stateVersion = "26.05";
