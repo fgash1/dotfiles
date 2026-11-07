@@ -51,11 +51,14 @@
     "widget.dmabuf.force-enabled" = true;
   };
 
-  # rtl8821ce was dropped from nixpkgs; these are the usual fixes for the in-kernel rtw88 driver's instability
-  boot.extraModprobeConfig = ''
-    options rtw88_core disable_lps_deep=y
-    options rtw88_pci disable_aspm=y
-  '';
+  # In-kernel rtw88 keeps dropping this card, even with deep LPS and ASPM disabled
+  boot.extraModulePackages = [ (config.boot.kernelPackages.callPackage ./rtl8821ce.nix { }) ];
+  boot.blacklistedKernelModules = [
+    "rtw88_8821ce"
+    "rtw88_8821c"
+    "rtw88_pci"
+    "rtw88_core"
+  ];
 
   virtualisation.virtualbox.host.enable = true;
   users.users.fatjon.extraGroups = [ "vboxusers" ];
