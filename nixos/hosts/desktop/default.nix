@@ -46,6 +46,7 @@
     "browser.download.dir" = "/data/Downloads";
     "browser.download.folderList" = 2;
     "media.ffmpeg.vaapi.enabled" = true;
+    "media.hardware-video-decoding.force-enabled" = true;
     "media.av1.enabled" = false;
     "gfx.x11-egl.force-enabled" = true;
     "widget.dmabuf.force-enabled" = true;
