@@ -18,7 +18,5 @@
 
   services.thermald.enable = true;
 
-  security.sudo.wheelNeedsPassword = false;
-
   system.stateVersion = "26.05";
 }
