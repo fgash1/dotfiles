@@ -65,9 +65,6 @@
 
   virtualisation.virtualbox.host.enable = true;
   users.users.fatjon.extraGroups = [ "vboxusers" ];
-  users.users.fatjon.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAwetI0mnb/fs/tX4a0N0v3RI4julS75nm+TGPyImyEX fatjon@laptop"
-  ];
 
   system.stateVersion = "26.05";
 }
