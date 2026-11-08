@@ -23,6 +23,26 @@ in
     }) links
   );
 
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications =
+      lib.genAttrs [
+        "x-scheme-handler/http"
+        "x-scheme-handler/https"
+        "x-scheme-handler/chrome"
+        "text/html"
+        "application/xhtml+xml"
+        "application/x-extension-htm"
+        "application/x-extension-html"
+        "application/x-extension-shtml"
+        "application/x-extension-xhtml"
+        "application/x-extension-xht"
+      ] (_: "firefox.desktop")
+      // {
+        "x-scheme-handler/claude-cli" = "claude-code-url-handler.desktop";
+      };
+  };
+
   gtk = {
     enable = true;
     theme = {
