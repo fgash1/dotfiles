@@ -11,6 +11,7 @@ nvim                       ~/.config/nvim
 rofi                       ~/.config/rofi
 feh                        ~/.config/feh
 kanata                     ~/.config/kanata
+autorandr                  ~/.config/autorandr
 
 code-flags.conf            ~/.config/code-flags.conf
 starship.toml              ~/.config/starship.toml
