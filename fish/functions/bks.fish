@@ -4,6 +4,6 @@ function bks --description 'Backup root filesystem to /data/backup'
         --delete \
         --delete-excluded \
         --info=progress2 \
-        --exclude={"/data/***","/dev/***","/proc/***","/sys/***","/tmp/***","/run/***","/mnt/***","/media/***","/lost+found","/swapfile","/var/tmp/***","/var/cache/pacman/pkg/***","/var/lib/systemd/coredump/***","/home/*/.cache/***"} \
+        --exclude={"/data/***","/dev/***","/proc/***","/sys/***","/tmp/***","/run/***","/mnt/***","/media/***","/lost+found","/swapfile","/var/tmp/***","/nix/***","/var/lib/systemd/coredump/***","/home/*/.cache/***"} \
         / /data/backup/
 end

@@ -7,7 +7,6 @@
 let
   repo = "${config.home.homeDirectory}/dotfiles";
 
-  # links.Linux stays the single source of truth; sudo (/etc) entries are handled by NixOS modules.
   links = lib.pipe (builtins.readFile ../../links.Linux) [
     (lib.splitString "\n")
     (map (line: lib.filter (s: builtins.isString s && s != "") (builtins.split "[[:space:]]+" line)))

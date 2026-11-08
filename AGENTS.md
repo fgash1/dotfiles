@@ -2,27 +2,35 @@
 
 ## Project Structure & Module Organization
 
-This repository stores personal Linux dotfiles and agent configuration. Top-level
-directories map directly to target config locations, usually under `~/.config`.
-Examples: `i3/`, `polybar/`, `picom/`, `alacritty/`, `fish/`, `nvim/`,
-`ranger/`, `rofi/`, `feh/`, and `kanata/`. Shared single-file configs live at the root,
-such as `starship.toml`, `.tmux.conf`, `.xinitrc`, `.prettierrc`, and
-`reflector.conf`. Agent-related files are grouped under `.claude/`, `.codex/`,
-and `.agents/`. Images and other visual assets belong in `images/`.
+This repository stores personal dotfiles for NixOS and macOS, plus agent
+configuration. Top-level directories map directly to target config locations,
+usually under `~/.config`. Examples: `i3/`, `polybar/`, `picom/`, `alacritty/`,
+`fish/`, `nvim/`, `ranger/`, `rofi/`, `feh/`, `kanata/`, and `autorandr/`. Shared
+single-file configs live at the root, such as `starship.toml`, `.tmux.conf`,
+`.xinitrc`, and `.prettierrc`. Agent-related files are grouped under `.claude/`,
+`.codex/`, and `.agents/`. Images and other visual assets belong in `images/`.
+
+The NixOS system is a flake: `flake.nix` builds the `laptop` and `desktop` hosts
+from `nixos/hosts/<host>/`, shared modules in `nixos/modules/`, and home-manager
+in `nixos/home/`. home-manager symlinks every entry in `links.Linux` back into
+this repo. On macOS, `install.sh` links the entries in `links.Darwin`.
 
 ## Build, Test, and Development Commands
 
-There is no build step. Validate changes with the tool that owns the config:
+Validate changes with the tool that owns the config:
 
 ```bash
-./install.sh                    # Symlink configs into the home directory
+sudo nixos-rebuild switch --flake .#<host>   # Apply NixOS changes (laptop | desktop)
+nixos-rebuild build --flake .#<host>         # Build without switching
+./install.sh                    # macOS only: symlink configs into the home directory
 fish_indent -w fish/**/*.fish   # Format Fish shell functions when available
 stylua nvim/**/*.lua            # Format Neovim Lua config when available
 prettier --write '**/*.{md,json,yml,yaml}' # Format supported text configs
 ```
 
-Run `./install.sh` only after reviewing its symlink targets. It overwrites
-existing symlinks and updates `/etc/xdg/reflector/reflector.conf` with `sudo`.
+Flakes only see git-tracked files, so `git add` new files before building. Keep
+secrets out of the Nix config; the repository is public. Run `./install.sh` only
+after reviewing its symlink targets; it overwrites existing symlinks.
 
 ## Coding Style & Naming Conventions
 
@@ -36,7 +44,8 @@ variables, and prefer small helper functions like `lns()` in `install.sh`.
 
 No automated test suite is defined. Test by loading the affected application:
 start a new Fish shell after editing `fish/`, run Neovim after editing `nvim/`,
-and reload i3/polybar after window-manager changes. For scripts, run:
+reload i3/polybar after window-manager changes, and build the affected host
+after editing `flake.nix` or `nixos/`. For scripts, run:
 
 ```bash
 bash -n install.sh

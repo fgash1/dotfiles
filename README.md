@@ -1,6 +1,6 @@
 ## Configs are for:
 
-One branch for both Arch Linux and macOS; OS-specific bits are handled per OS (see below).
+One branch for both NixOS and macOS; OS-specific bits are handled per OS (see below).
 
 -   i3 - Tiling window manager (Linux).
 -   AeroSpace - Tiling window manager (macOS).
@@ -14,8 +14,10 @@ One branch for both Arch Linux and macOS; OS-specific bits are handled per OS (s
 -   ranger - Terminal file manager (Linux).
 -   feh - Wallpaper setter (Linux).
 -   kanata - Key remapper (home row mods, caps-word, navigation layer).
+-   autorandr - Per-machine monitor layouts (Linux).
 -   tmux - Terminal multiplexer.
 -   Claude Code (`.claude/`) and Codex CLI (`.codex/`) agent tooling.
+-   NixOS (`flake.nix`, `nixos/`) - System and home-manager config for my laptop and desktop.
 
 These are some of the tools that I use and have customized for my development workflow.
 
@@ -25,10 +27,21 @@ These are some of the tools that I use and have customized for my development wo
 
 ## Usage:
 
+### NixOS
+
+```
+$ git clone https://github.com/fgash1/dotfiles ~/dotfiles
+$ sudo nixos-rebuild switch --flake ~/dotfiles#<host>
+```
+
+Hosts live in `nixos/hosts/` (`laptop`, `desktop`). home-manager links everything listed in `links.Linux` back into the repo, so edits apply immediately.
+
+### macOS
+
 ```
 $ git clone https://github.com/fgash1/dotfiles ~/dotfiles
 $ ~/dotfiles/install.sh
 ```
 
 > [!NOTE]
-> The install script is idempotent — safe to re-run. It links everything listed in `links.$(uname)` (`links.Linux` / `links.Darwin`), replaces existing symlinks, and skips (with a warning) any destination that is a real file or directory.
+> The install script is idempotent — safe to re-run. It links everything listed in `links.Darwin`, replaces existing symlinks, and skips (with a warning) any destination that is a real file or directory.

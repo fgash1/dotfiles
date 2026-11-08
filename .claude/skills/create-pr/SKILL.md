@@ -40,7 +40,7 @@ No approval gate: draft, then create. Do not ask for confirmation before `gh pr 
 Run the full flow in one turn. No confirmation step.
 
 1. **Preflight** (parallel):
-   - `gh --version` — fail clearly with an install hint (`sudo pacman -S github-cli && gh auth login`) if missing.
+   - `gh --version` — fail clearly with an install hint (`gh` is in `nixos/modules/packages.nix`; then `gh auth login`) if missing.
    - `git rev-parse --abbrev-ref HEAD` and `git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null` — current branch + whether it has an upstream.
    - `gh pr view --json number,url,state 2>/dev/null` — does a PR already exist for this branch?
    - `git status --porcelain` — if there are uncommitted changes, note them in your final message (they won't be in the PR), but do not block.
