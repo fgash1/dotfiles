@@ -4,4 +4,4 @@ Host github.com
     IdentityFile ~/.ssh/git_auth
 
 Host *
-    AddKeysToAgent 8h
+    AddKeysToAgent yes

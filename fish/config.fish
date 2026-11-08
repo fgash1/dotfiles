@@ -23,10 +23,4 @@ fish_add_path ~/.local/bin ~/.cargo/bin
 
 if test (uname) = Linux
     alias s startx
-    if not set -q SSH_AUTH_SOCK; and test -S $XDG_RUNTIME_DIR/ssh-agent
-        set -gx SSH_AUTH_SOCK $XDG_RUNTIME_DIR/ssh-agent
-    end
-    if status is-interactive; and set -q SSH_AUTH_SOCK; and not ssh-add -T ~/.ssh/git_auth.pub ~/.ssh/git_signing.pub >/dev/null 2>&1
-        ssh-add -t 8h ~/.ssh/git_auth ~/.ssh/git_signing
-    end
 end

@@ -42,10 +42,13 @@
     Defaults timestamp_type=global
   '';
 
-  programs.ssh = {
-    startAgent = true;
-    agentTimeout = "8h";
-  };
+  # Unlocked by the login password via PAM; gcr-ssh-agent keeps SSH key passphrases in it
+  services.gnome.gnome-keyring.enable = true;
+  environment.extraInit = ''
+    if [ -z "$SSH_AUTH_SOCK" ] && [ -n "$XDG_RUNTIME_DIR" ]; then
+      export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/gcr/ssh"
+    fi
+  '';
 
   # Lets prebuilt Linux binaries (e.g. the native claude installer) find a dynamic loader
   programs.nix-ld.enable = true;
