@@ -65,6 +65,7 @@
     config.common.default = "*";
   };
 
+  fonts.fontconfig.defaultFonts.monospace = [ "SauceCodePro Nerd Font" ];
   fonts.packages = with pkgs; [
     nerd-fonts.sauce-code-pro
     source-code-pro
