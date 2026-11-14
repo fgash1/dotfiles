@@ -11,7 +11,11 @@
     enable = true;
     extraPackages = [ pkgs.intel-media-driver ];
   };
-  environment.sessionVariables.LIBVA_DRIVER_NAME = "iHD";
+  environment.sessionVariables = {
+    LIBVA_DRIVER_NAME = "iHD";
+    # Firefox on X11 only gets smooth touchpad scrolling and pinch-zoom through XInput2, which is opt-in
+    MOZ_USE_XINPUT2 = "1";
+  };
 
   environment.systemPackages = [ pkgs.brightnessctl ];
   services.udev.packages = [ pkgs.brightnessctl ];
@@ -38,24 +42,6 @@
       [font]
       size = 11
     '';
-
-    xdg.configFile."libinput-gestures.conf".text = ''
-      gesture swipe left 3 xdotool key alt+Right
-      gesture swipe right 3 xdotool key alt+Left
-    '';
-    systemd.user.services.libinput-gestures = {
-      Unit.Description = "Touchpad gestures";
-      Service = {
-        ExecStart = "${pkgs.libinput-gestures}/bin/libinput-gestures";
-        Environment = [
-          "DISPLAY=:0"
-          "XAUTHORITY=%h/.Xauthority"
-        ];
-        Restart = "on-failure";
-        RestartSec = 3;
-      };
-      Install.WantedBy = [ "default.target" ];
-    };
   };
 
   system.stateVersion = "26.05";
