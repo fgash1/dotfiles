@@ -2,7 +2,7 @@ set $mod Mod4
 set $terminal alacritty
 set $fmanager alacritty -e ranger
 set $menu rofi -show drun -display-drun ""
-set $lock i3lock -n -e -c 000000
+set $lock ~/.config/i3/scripts/lock
 
 font pango:Source Code Pro 10
 

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+img=$(sed -n "s/.*--bg-[a-z]* '\(.*\)' *$/\1/p" "$HOME/.fehbg" 2>/dev/null)
+
+# i3lock only reads PNG; anything else falls back to a black screen rather than failing to lock
+case "$img" in
+*.png | *.PNG)
+    [ -f "$img" ] && exec i3lock -n -e -c 000000 -i "$img" --fill
+    ;;
+esac
+exec i3lock -n -e -c 000000

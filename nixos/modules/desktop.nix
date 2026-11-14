@@ -16,6 +16,9 @@
 
   services.autorandr.enable = true;
 
+  # i3lock-color scales the wallpaper onto the lock screen; plain i3lock only tiles it
+  programs.i3lock.package = pkgs.i3lock-color;
+
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;

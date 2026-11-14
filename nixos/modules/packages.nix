@@ -74,7 +74,6 @@
     arc-theme
     feh
     haskellPackages.greenclip
-    i3lock
     kitty
     lxappearance
     networkmanagerapplet
