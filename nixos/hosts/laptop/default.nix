@@ -18,5 +18,13 @@
 
   services.thermald.enable = true;
 
+  # 15.6" 1080p panel is ~141 DPI; 110 keeps text readable without oversizing bars and web pages
+  services.xserver.dpi = 110;
+  home-manager.users.fatjon.xresources.properties."Xft.dpi" = 110;
+  home-manager.users.fatjon.xdg.configFile."alacritty-host.toml".text = ''
+    [font]
+    size = 11
+  '';
+
   system.stateVersion = "26.05";
 }

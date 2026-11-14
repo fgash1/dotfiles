@@ -18,6 +18,9 @@
   ];
   networking.enableIPv6 = false;
 
+  # NVIDIA derives ~101 DPI from EDID; pin 96 so rofi (dpi: 0) keeps its previous size
+  services.xserver.dpi = 96;
+
   # GTX 1050 is Pascal, which the 590+ drivers dropped
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {

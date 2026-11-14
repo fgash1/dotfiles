@@ -1,5 +1,5 @@
 [general]
-import = ["~/.config/alacritty-os.toml"]
+import = ["~/.config/alacritty-os.toml", "~/.config/alacritty-host.toml"]
 
 [font.normal]
 family = "SauceCodePro Nerd Font"
