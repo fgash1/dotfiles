@@ -110,6 +110,7 @@
     obs-studio
     obsidian
     qbittorrent
+    spotify
     vlc
   ];
 }
