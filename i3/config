@@ -11,6 +11,7 @@ exec --no-startup-id nm-applet
 exec --no-startup-id greenclip daemon
 exec_always --no-startup-id picom
 exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id sh -c '[ -x ~/.fehbg ] && ~/.fehbg'
 
 floating_modifier $mod
 tiling_drag modifier titlebar
