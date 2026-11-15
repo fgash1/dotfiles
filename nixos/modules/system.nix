@@ -4,6 +4,7 @@
     systemd-boot.enable = true;
     systemd-boot.configurationLimit = 10;
     efi.canTouchEfiVariables = true;
+    timeout = 1;
   };
 
   nix = {
@@ -23,6 +24,7 @@
   nixpkgs.config.allowUnfree = true;
 
   networking.networkmanager.enable = true;
+  systemd.services.NetworkManager-wait-online.enable = false;
   time.timeZone = "Europe/Skopje";
 
   zramSwap.enable = true;
