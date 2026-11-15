@@ -23,6 +23,12 @@ in
     }) links
   );
 
+  # Claude Code saves via temp file + rename next to the first symlink hop, which fails inside /nix/store.
+  home.activation.claudeSettings = lib.hm.dag.entryAfter [ "linkGeneration" ] ''
+    run mkdir -p $HOME/.claude
+    run ln -sfn ${repo}/.claude/settings.json $HOME/.claude/settings.json
+  '';
+
   xdg.mimeApps = {
     enable = true;
     defaultApplications =

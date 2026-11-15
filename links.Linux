@@ -28,7 +28,6 @@ ssh/config                 ~/.ssh/config
 .claude/rules              ~/.claude/rules
 .claude/output-styles      ~/.claude/output-styles
 .claude/hooks              ~/.claude/hooks
-.claude/settings.json      ~/.claude/settings.json
 
 .codex/agents              ~/.codex/agents
 .codex/hooks               ~/.codex/hooks
