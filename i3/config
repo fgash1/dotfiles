@@ -33,11 +33,11 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86MonBrightnessUp exec --no-startup-id brightnessctl set 10%+
 bindsym XF86MonBrightnessDown exec --no-startup-id brightnessctl set 10%-
 bindsym Mod1+Shift+e exec --no-startup-id $fmanager
-bindsym --release $mod+Ctrl+c exec xcolor | tr -d '\n' | xclip -selection clipboard
+bindsym --release $mod+Ctrl+c exec --no-startup-id xcolor | tr -d '\n' | xclip -selection clipboard
 bindsym --release $mod+p exec --no-startup-id shutter --select
 bindsym $mod+Shift+p exec --no-startup-id shutter --active
 bindsym $mod+Ctrl+p exec --no-startup-id ~/.config/i3/scripts/monitor-sc-select
-bindsym Ctrl+Shift+l exec $lock
+bindsym Ctrl+Shift+l exec --no-startup-id $lock
 bindsym $mod+Return exec --no-startup-id $terminal
 bindsym $mod+space exec --no-startup-id $menu
 bindsym $mod+v exec --no-startup-id \
@@ -128,7 +128,7 @@ bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+e exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+e exec --no-startup-id "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 
 mode "resize" {
         bindsym h resize shrink width 10 px or 10 ppt

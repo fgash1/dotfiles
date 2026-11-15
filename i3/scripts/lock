@@ -1,11 +1,19 @@
 #!/bin/sh
 
-img=$(sed -n "s/.*--bg-[a-z]* '\(.*\)' *$/\1/p" "$HOME/.fehbg" 2>/dev/null)
+img=$(sed -n "s/.*'\([^']*\)' *$/\1/p" "$HOME/.fehbg" 2>/dev/null)
+size=$(xdpyinfo | sed -n 's/^ *dimensions: *\([0-9]*x[0-9]*\).*/\1/p')
 
-# i3lock only reads PNG; anything else falls back to a black screen rather than failing to lock
-case "$img" in
-*.png | *.PNG)
-    [ -f "$img" ] && exec i3lock -n -e -c 000000 -i "$img" --fill
-    ;;
-esac
+# i3lock-color fills each monitor separately; pre-render one desktop-wide image like feh --bg-fill --no-xinerama
+if [ -f "$img" ] && [ -n "$size" ]; then
+    w=${size%x*} h=${size#*x}
+    cache="${XDG_CACHE_HOME:-$HOME/.cache}/i3lock"
+    out="$cache/$(printf '%s' "$img $size" | cksum | cut -d' ' -f1).png"
+    if [ ! -f "$out" ] || [ "$img" -nt "$out" ]; then
+        mkdir -p "$cache"
+        ffmpeg -loglevel error -y -i "$img" \
+            -vf "scale=$w:$h:force_original_aspect_ratio=increase,crop=$w:$h" \
+            -frames:v 1 "$out"
+    fi
+    [ -f "$out" ] && i3lock -n -e -c 000000 -i "$out" && exit
+fi
 exec i3lock -n -e -c 000000
