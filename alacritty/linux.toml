@@ -1,2 +1,5 @@
 [font]
 size = 10
+
+[terminal]
+osc52 = "Disabled"
