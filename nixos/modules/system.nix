@@ -24,6 +24,7 @@
   nixpkgs.config.allowUnfree = true;
 
   networking.networkmanager.enable = true;
+  networking.networkmanager.logLevel = "INFO";
   systemd.services.NetworkManager-wait-online.enable = false;
   time.timeZone = "Europe/Skopje";
 
