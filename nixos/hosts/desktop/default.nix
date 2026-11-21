@@ -65,6 +65,8 @@
     "rtw88_pci"
     "rtw88_core"
   ];
+  # The card's Bluetooth half sometimes fails to resume from USB autosuspend (error -71) and stays dead until a cold boot
+  boot.extraModprobeConfig = "options btusb enable_autosuspend=n";
 
   virtualisation.virtualbox.host.enable = true;
   users.users.fatjon.extraGroups = [ "vboxusers" ];
