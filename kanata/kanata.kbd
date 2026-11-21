@@ -9,6 +9,7 @@
   linux-dev-names-include (
     "Pebble K380s"
     "AT Translated Set 2 keyboard"
+    "NOVATEK USB Keyboard"
   )
   macos-dev-names-include (
     "Pebble K380s"
