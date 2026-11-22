@@ -83,6 +83,7 @@
     picom
     playerctl
     (polybar.override { pulseSupport = true; })
+    pulseaudio
     rofi
     shutter
     swappy
