@@ -40,8 +40,6 @@
     enable = true;
     extraPackages = [ pkgs.nvidia-vaapi-driver ];
   };
-
-  programs.steam.enable = true;
   environment.sessionVariables = {
     LIBVA_DRIVER_NAME = "nvidia";
     NVD_BACKEND = "direct";
