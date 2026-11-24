@@ -4,7 +4,7 @@
     systemd-boot.enable = true;
     systemd-boot.configurationLimit = 10;
     efi.canTouchEfiVariables = true;
-    timeout = 1;
+    timeout = 5;
   };
 
   nix = {
