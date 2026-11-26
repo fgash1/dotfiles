@@ -37,3 +37,7 @@ ssh/config                 ~/.ssh/config
 
 # Cross-tool skills (Agent Skills standard) consumed by Codex from ~/.agents/skills/
 .agents/skills             ~/.agents/skills
+
+# Personal scripts
+bin/bt                     ~/.local/bin/bt
+bin/reg2bluez              ~/.local/bin/reg2bluez

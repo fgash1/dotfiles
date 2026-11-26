@@ -1,0 +1,183 @@
+#!/usr/bin/env python3
+"""Copy Windows BLE pairing keys from a .reg export into a BlueZ info file without printing them."""
+import argparse
+import os
+import re
+import sys
+import tempfile
+
+
+def read_text(path):
+    raw = open(path, "rb").read()
+    if raw[:2] in (b"\xff\xfe", b"\xfe\xff"):
+        return raw.decode("utf-16")
+    try:
+        return raw.decode("utf-8-sig")
+    except UnicodeDecodeError:
+        return raw.decode("latin-1")
+
+
+def parse_reg(text):
+    joined, buf = [], ""
+    for line in text.splitlines():
+        line = line.rstrip()
+        if line.endswith("\\") and not line.startswith("["):
+            buf += line[:-1].strip()
+            continue
+        joined.append(buf + line.strip())
+        buf = ""
+    sections, cur = {}, None
+    for line in joined:
+        if line.startswith("[") and line.endswith("]"):
+            cur = line[1:-1]
+            sections[cur] = {}
+        elif cur and line.startswith('"') and "=" in line:
+            name, val = line.split("=", 1)
+            sections[cur][name.strip('"')] = val
+    return sections
+
+
+def reg_value(val):
+    if val.startswith("dword:"):
+        return int(val[6:], 16)
+    m = re.match(r"hex(\(([0-9a-fA-F]+)\))?:(.*)", val)
+    if m:
+        data = bytes(int(b, 16) for b in m.group(3).split(",") if b)
+        if m.group(2) == "b":
+            return int.from_bytes(data, "little")
+        return data
+    raise ValueError("unsupported registry value type")
+
+
+def find_device(sections, adapter, device):
+    a = adapter.replace(":", "").lower()
+    d = device.replace(":", "").lower()
+    for path, values in sections.items():
+        p = path.lower().replace("/", "\\")
+        if p.endswith("\\" + d) and ("\\" + a + "\\") in p:
+            return values
+    found = [p.rsplit("\\", 2)[-2:] for p in sections if "\\keys\\" in p.lower()]
+    sys.exit(f"no registry key for {adapter}/{device}; adapter/device keys in file: {found}")
+
+
+def build_ltk(values, reverse_ltk):
+    get = {k.lower(): v for k, v in values.items()}
+    if "ltk" not in get:
+        sys.exit("no LTK in registry block (classic BR/EDR devices are not handled)")
+    ltk = reg_value(get["ltk"])
+    if reverse_ltk:
+        ltk = ltk[::-1]
+    lt = {"Key": ltk.hex().upper()}
+    if "keylength" in get:
+        lt["EncSize"] = str(reg_value(get["keylength"]))
+    if "ediv" in get:
+        lt["EDiv"] = str(reg_value(get["ediv"]))
+    if "erand" in get:
+        lt["Rand"] = str(reg_value(get["erand"]))
+    sc = False
+    if "authreq" in get:
+        auth = reg_value(get["authreq"])
+        sc = bool(auth & 0x08)
+        # BlueZ: 0 unauth legacy, 1 auth legacy, 2 unauth SC, 3 auth SC; AuthReq bit 0x04=MITM, 0x08=SC.
+        lt["Authenticated"] = str((2 if sc else 0) + (1 if auth & 0x04 else 0))
+    return lt, sc, get
+
+
+def section_names(text):
+    return re.findall(r"^\[(.+)\]\s*$", text, re.M)
+
+
+def apply_updates(text, updates, remove=()):
+    sections = [[None, []]]
+    for line in text.splitlines():
+        m = re.match(r"^\[(.+)\]\s*$", line)
+        if m:
+            sections.append([m.group(1), []])
+        else:
+            sections[-1][1].append(line)
+    removed = [s[0] for s in sections if s[0] in remove]
+    sections = [s for s in sections if s[0] not in remove]
+    changed, added = [], []
+    for name, kv in updates.items():
+        sec = next((s for s in sections if s[0] == name), None)
+        if sec is None:
+            sec = [name, [""]]
+            sections.append(sec)
+        lines = sec[1]
+        for key, val in kv.items():
+            for i, line in enumerate(lines):
+                if "=" in line and line.split("=", 1)[0].strip() == key:
+                    if line.split("=", 1)[1].strip() != val:
+                        changed.append(f"{name}.{key}")
+                    lines[i] = f"{key}={val}"
+                    break
+            else:
+                while lines and lines[-1] == "":
+                    lines.pop()
+                lines.append(f"{key}={val}")
+                lines.append("")
+                added.append(f"{name}.{key}")
+    out = []
+    for name, lines in sections:
+        if name is not None:
+            out.append(f"[{name}]")
+        out.extend(lines)
+    return "\n".join(out).rstrip("\n") + "\n", changed, added, removed
+
+
+def main():
+    ap = argparse.ArgumentParser(description=__doc__)
+    ap.add_argument("reg", help="Windows .reg export of BTHPORT\\Parameters\\Keys")
+    ap.add_argument("--adapter", required=True, help="adapter MAC, e.g. AA:BB:CC:DD:EE:FF")
+    ap.add_argument("--device", required=True, help="device MAC as Windows paired it")
+    ap.add_argument("--info", help="BlueZ info file (default: /var/lib/bluetooth/ADAPTER/DEVICE/info)")
+    ap.add_argument("--no-reverse-irk", action="store_true")
+    ap.add_argument("--reverse-ltk", action="store_true")
+    ap.add_argument("--dry-run", action="store_true")
+    args = ap.parse_args()
+
+    info = args.info or f"/var/lib/bluetooth/{args.adapter.upper()}/{args.device.upper()}/info"
+    values = find_device(parse_reg(read_text(args.reg)), args.adapter, args.device)
+    lt, sc, get = build_ltk(values, args.reverse_ltk)
+
+    original = open(info).read()
+    if "[General]" not in original:
+        sys.exit("info file has no [General] section; refusing to touch it")
+    present = section_names(original)
+
+    # The kernel reports SC keys with initiator=0, so BlueZ stores and reads them under the peripheral group.
+    if sc:
+        legacy_name = "SlaveLongTermKey" in present and "PeripheralLongTermKey" not in present
+        target = "SlaveLongTermKey" if legacy_name else "PeripheralLongTermKey"
+        remove = ("LongTermKey",)
+    else:
+        target, remove = "LongTermKey", ()
+    updates = {target: lt}
+    if "irk" in get:
+        irk = reg_value(get["irk"])
+        # Byte order unverified: a static-address device worked either way.
+        if not args.no_reverse_irk:
+            irk = irk[::-1]
+        updates["IdentityResolvingKey"] = {"Key": irk.hex().upper()}
+
+    new, changed, added, removed = apply_updates(original, updates, remove)
+    print("sections before:", ", ".join(present))
+    print("sections after: ", ", ".join(section_names(new)))
+    print("changed:", ", ".join(changed) or "none")
+    print("added:  ", ", ".join(added) or "none")
+    print("removed:", ", ".join(removed) or "none")
+    if args.dry_run or new == original:
+        return
+
+    st = os.stat(info)
+    fd, tmp = tempfile.mkstemp(dir=os.path.dirname(info), prefix=".info.")
+    with os.fdopen(fd, "w") as f:
+        f.write(new)
+    os.chmod(tmp, st.st_mode & 0o7777)
+    os.chown(tmp, st.st_uid, st.st_gid)
+    os.replace(tmp, info)
+    print("written:", info)
+
+
+if __name__ == "__main__":
+    main()

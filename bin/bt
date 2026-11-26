@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+dropin_dir=/run/systemd/system/bluetooth.service.d
+dropin=$dropin_dir/off.conf
+
+case "${1:-}" in
+  stop)
+    sudo mkdir -p "$dropin_dir"
+    printf '[Unit]\nConditionPathExists=/nonexistent\n' | sudo tee "$dropin" >/dev/null
+    sudo systemctl daemon-reload
+    sudo systemctl stop bluetooth
+    ;;
+  start)
+    sudo rm -f "$dropin"
+    sudo systemctl daemon-reload
+    sudo systemctl start bluetooth
+    ;;
+  status) ;;
+  *)
+    echo "usage: $(basename "$0") stop|start|status" >&2
+    exit 1
+    ;;
+esac
+
+echo "bluetooth: $(systemctl is-active bluetooth || true)"
